@@ -5,10 +5,11 @@
   "homepage": "https://brunodorea.github.io/svelte-ghpages",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "gh-pages -d build"
+    "deploy": "pnpm run build && pnpm run gh-pages",
+    "gh-pages": "gh-pages -d dist"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.1.1",
