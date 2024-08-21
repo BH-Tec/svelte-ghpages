@@ -1,47 +1,52 @@
-# Svelte + Vite
+# Tutorial
 
-This template should help get you started developing with Svelte in Vite.
+### Passo 1: Configurar o `gh-pages`
 
-## Recommended IDE Setup
+1. **Instalar a biblioteca `gh-pages`**:
+   Adicione a biblioteca `gh-pages` ao seu projeto como uma devDependence:
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+   ```bash
+   pnpm add gh-pages -D
+   ```
 
-## Need an official Svelte framework?
+2. **Adicionar script de build**:
+   No arquivo `package.json`, adicione o script `build` para gerar o build do seu projeto.
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+   ```json
+   "scripts": {
+     "deploy": "pnpm run build && pnpm run gh-pages",
+   }
+    ```
 
-## Technical considerations
+3. Configurar a base do projeto
+   No arquivo `vite.config.js`, add a configuração:
 
-**Why use this over SvelteKit?**
+   ```javascript
+   import { defineConfig } from 'vite'
+   import { svelte } from '@sveltejs/vite-plugin-svelte'
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+   export default defineConfig({
+     plugins: [svelte()],
+     base: '/nome-do-repositorio/'  // Substitua "nome-do-repositorio" pelo nome do seu repositório GitHub
+   })
+   ```
 
-This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+### Passo 2: Publicando no GitHub Pages
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+1. **Publicar no GitHub Pages**:
+   ```bash
+   pnpm run deploy
+   ```
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+### Passo 3: Configurar o GitHub Pages no repositório
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
+1. **Ativar o GitHub Pages**:
+   Depois de fazer o deploy, vá até a página de configurações do seu repositório no GitHub:
 
-**Why include `.vscode/extensions.json`?**
+   1. Acesse o repositório no GitHub.
+   2. Clique na aba `Settings`.
+   3. No menu lateral, clique em `Pages`.
+   4. Em `Source`, selecione `gh-pages branch` no dropdown e clique em `Save`.
 
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `checkJs` in the JS template?**
-
-It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/sveltejs/svelte-hmr/tree/master/packages/svelte-hmr#preservation-of-local-state).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```js
-// store.js
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
-```
+2. **Acessar a página**:
+   Aguarde alguns minutos e sua aplicação estará disponível em `https://seu-usuario.github.io/seu-repositorio`. Você pode verificar acessando esse URL diretamente no navegador.
